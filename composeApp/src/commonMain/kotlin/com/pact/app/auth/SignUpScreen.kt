@@ -1,0 +1,168 @@
+package com.pact.app.auth
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.pact.app.SurfaceWash
+import com.pact.app.Text1
+import org.jetbrains.compose.resources.painterResource
+import pact.composeapp.generated.resources.Res
+import pact.composeapp.generated.resources.bootstrap_arrow_left_square
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+
+@Composable
+fun SignUpScreen(onBack: () -> Unit){
+    Column(
+        modifier = Modifier
+        .fillMaxSize()
+        .background(MaterialTheme.colorScheme.background)
+        .padding(16.dp)
+        .safeContentPadding(),
+
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ){
+        // Top Back Button
+        Row(modifier = Modifier
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Start
+        ){
+            IconButton(
+                onClick = onBack,
+                modifier = Modifier
+                    .size(40.dp)
+                    .background(
+                        color = SurfaceWash,
+                        shape = RoundedCornerShape(14.dp)
+                    )
+            ) {
+                Icon(
+                    painter = painterResource(Res.drawable.bootstrap_arrow_left_square),
+                    contentDescription = "Back",
+                    tint = Text1,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(25.dp))
+
+        // Heading Text
+        Column (
+            modifier = Modifier
+        ){
+            Text(
+                text="Let's get you set up.",
+                style= MaterialTheme.typography.headlineLarge
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text="Just a couple of things, then we'll plan your first day together.",
+                style=MaterialTheme.typography.bodyMedium
+            )
+        }
+
+        // Text fields for inputting email and password
+        Column (){
+            Text("Email")
+            TextField(
+                state = rememberTextFieldState(initialText = "example@gmail.com"),
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text("Password")
+            TextField(
+                state = rememberTextFieldState(initialText = "example@gmail.com"),
+            )
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                var checked by remember { mutableStateOf(true) }
+                Checkbox(
+                    checked = checked,
+                    onCheckedChange = { checked = it }
+                )
+                Text(
+                    "Send me a gentle reminder if I forget to plan in the morning."
+                )
+            }
+        }
+
+        // Signup Button
+        Column(
+            modifier = Modifier.padding(bottom = 8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ){
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth(0.85f)
+                    .height(50.dp)
+                ,
+                onClick = {},
+                shape = RoundedCornerShape(18.dp)
+
+            ) {
+                Text(
+                    text = "Sign up",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.White,
+                    textAlign = TextAlign.Center,
+                )
+            }
+            Spacer(modifier = Modifier.height(12.dp))
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text="Already have an account? ",
+                    style = MaterialTheme.typography.labelSmall
+
+                )
+                Text(
+                    text="Log in",
+                    style= MaterialTheme.typography.labelSmall,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            Text(
+                text="By continuing, you agree to our Terms & Privacy. ",
+                style = MaterialTheme.typography.labelSmall
+
+            )
+        }
+
+
+    }
+}

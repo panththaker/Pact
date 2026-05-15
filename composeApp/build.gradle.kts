@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
+    alias(libs.plugins.kotlinSerialization)
+
 }
 
 kotlin {
@@ -32,6 +34,7 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation("androidx.navigation:navigation-compose:2.9.8")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -72,6 +75,7 @@ android {
 
 dependencies {
     debugImplementation(libs.compose.uiTooling)
+    debugImplementation("org.jetbrains.compose.ui:ui-tooling:1.10.3")
 }
 
 compose.desktop {
