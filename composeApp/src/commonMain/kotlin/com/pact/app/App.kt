@@ -9,9 +9,16 @@ import com.pact.app.auth.OpeningScreen
 import com.pact.app.auth.SignUpScreen
 
 @Composable
+fun ScreenPreview(){
+    PactTheme{
+        SignUpScreen (onBack = {} )
+    }
+}
+
+@Composable
 @Preview
 fun App() {
-    PactTheme {
+//    PactTheme {
 //        val navController = rememberNavController()
 //        NavHost(
 //            navController = navController,
@@ -24,9 +31,9 @@ fun App() {
 //                SignUpScreen(onBack = {navController.popBackStack()})
 //            }
 //        }
-        SignUpScreen(onBack = {})
-    }
-}
+//    }
 
+    ScreenPreview()
+}
 
 
