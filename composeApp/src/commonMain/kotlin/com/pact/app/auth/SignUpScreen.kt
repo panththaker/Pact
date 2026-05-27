@@ -1,6 +1,7 @@
 package com.pact.app.auth
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,13 +10,16 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
@@ -26,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -40,6 +45,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.pact.app.Primary
@@ -48,13 +54,18 @@ import com.pact.app.Text2
 import com.pact.app.Text3
 
 @Composable
-fun SignUpScreen(onBack: () -> Unit){
+fun SignUpScreen(viewModel: AuthViewModel, onBack: () -> Unit, onLoginClick: () -> Unit){
+    val state by viewModel.state.collectAsState()
+
     Column(
         modifier = Modifier
         .fillMaxSize()
         .background(MaterialTheme.colorScheme.background)
         .safeDrawingPadding()
-        .padding(horizontal = 24.dp, vertical = 16.dp),
+        .padding(horizontal = 24.dp, vertical = 16.dp)
+        .imePadding()
+        .verticalScroll(rememberScrollState()),
+
 
         horizontalAlignment = Alignment.CenterHorizontally,
     ){
@@ -109,7 +120,15 @@ fun SignUpScreen(onBack: () -> Unit){
             Spacer(modifier = Modifier.height(10.dp))
             TextField(
                 modifier = Modifier.fillMaxWidth(),
-                state = rememberTextFieldState(initialText = "example@gmail.com"),
+                value = state.email,
+                onValueChange = {newText -> viewModel.onEmailChange(newText)},
+                placeholder = {
+                    Text(
+                        text = "example@gmail.com",
+                        color = Text3,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                },
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = SurfaceSoft,
                     unfocusedContainerColor = SurfaceSoft,
@@ -129,7 +148,9 @@ fun SignUpScreen(onBack: () -> Unit){
             Spacer(modifier = Modifier.height(10.dp))
             TextField(
                 modifier = Modifier.fillMaxWidth(),
-                state = rememberTextFieldState(initialText = "password"),
+                value = state.password,
+                onValueChange = {newText -> viewModel.onPasswordChange(newText)},
+                visualTransformation = PasswordVisualTransformation(),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = SurfaceSoft,
                     unfocusedContainerColor = SurfaceSoft,
@@ -144,26 +165,6 @@ fun SignUpScreen(onBack: () -> Unit){
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                var checked by remember { mutableStateOf(true) }
-                Checkbox(
-                    checked = checked,
-                    onCheckedChange = { checked = it },
-                    colors = CheckboxDefaults.colors(
-                        checkedColor = Primary,
-                        uncheckedColor = Text3,
-                        checkmarkColor = Color.White
-                    )
-                )
-                Text(
-                    text = "Send me a gentle reminder if I forget to plan in the morning.",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Text2
-                )
-            }
         }
 
         Spacer(modifier = Modifier.weight(1f))
@@ -203,6 +204,7 @@ fun SignUpScreen(onBack: () -> Unit){
 
                 )
                 Text(
+                    modifier = Modifier.clickable() { onLoginClick() },
                     text="Log in",
                     style= MaterialTheme.typography.labelSmall,
                     fontWeight = FontWeight.Bold,
@@ -214,7 +216,8 @@ fun SignUpScreen(onBack: () -> Unit){
                 text="By continuing, you agree to our Terms & Privacy. ",
                 style = MaterialTheme.typography.labelSmall,
                 fontSize = 12.sp,
-                color = Text3
+                color = Text3,
+
             )
         }
 

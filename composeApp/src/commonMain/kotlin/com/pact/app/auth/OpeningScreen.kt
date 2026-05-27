@@ -1,6 +1,7 @@
 package com.pact.app.auth
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,10 +20,11 @@ import com.pact.app.BgCanvas
 import com.pact.app.PactAvatar
 import com.pact.app.PactTheme
 import com.pact.app.PlusJakartaSans
+import com.pact.app.Primary
 import com.pact.app.openingScreenBackgroundGradient
 
 @Composable
-fun OpeningScreen(onGetStarted: () -> Unit) {
+fun OpeningScreen(onGetStarted: () -> Unit, onLoginClick:() -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -111,22 +113,16 @@ fun OpeningScreen(onGetStarted: () -> Unit) {
 
                     )
                 Text(
+                    modifier = Modifier.clickable(){onLoginClick()},
                     text="Sign in",
                     style= MaterialTheme.typography.labelSmall,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color= Primary
                 )
             }
         }
 
 
 
-    }
-}
-
-@Composable
-@Preview
-private fun OpeningScreenPreview() {
-    PactTheme {
-        OpeningScreen(onGetStarted = {})
     }
 }
