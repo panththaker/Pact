@@ -79,7 +79,19 @@ fun AppTypography(): Typography {
             fontSize = 13.sp,
             fontWeight = FontWeight.SemiBold,
             color = Text2
-        )
+        ),
+        titleMedium = TextStyle(
+            fontFamily = plusJakartaSans,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            color = Text1
+        ),
+        labelMedium = TextStyle(
+            fontFamily = plusJakartaSans,
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Medium,
+            color = Text2
+        ),
     )
 }
 
