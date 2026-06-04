@@ -1,4 +1,4 @@
-package com.pact.app.auth
+package com.pact.app.auth.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,13 +13,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.pact.app.BgCanvas
 import com.pact.app.PactAvatar
-import com.pact.app.PactTheme
-import com.pact.app.PlusJakartaSans
 import com.pact.app.Primary
 import com.pact.app.openingScreenBackgroundGradient
 

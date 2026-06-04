@@ -1,4 +1,4 @@
-package com.pact.app.auth
+package com.pact.app.auth.presentation
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -48,12 +48,43 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.width
 import androidx.compose.ui.text.font.FontWeight
 import pact.composeapp.generated.resources.ic_google
+import androidx.compose.runtime.LaunchedEffect
 
 
 @Composable
-fun LoginScreen(viewModel: AuthViewModel, onBack: () -> Unit, onSignupClick: () -> Unit){
+fun LoginScreenRoot(
+    viewModel: AuthViewModel,
+    onBack: () -> Unit,
+    onSignupClick: () -> Unit,
+    navToHome: () -> Unit
+) {
     val state by viewModel.state.collectAsState()
 
+    LaunchedEffect(state.isLoggedIn) {
+        if (state.isLoggedIn) {
+            navToHome()
+        }
+    }
+
+    LoginScreen(
+        state = state,
+        onAction = viewModel::onAction,
+        onBack = onBack,
+        onSignupClick = onSignupClick
+
+    )
+
+
+}
+
+
+@Composable
+private fun LoginScreen(
+    state: AuthState,
+    onAction: (AuthAction) -> Unit,
+    onBack: () -> Unit,
+    onSignupClick: () -> Unit
+){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -112,7 +143,7 @@ fun LoginScreen(viewModel: AuthViewModel, onBack: () -> Unit, onSignupClick: () 
             TextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = state.email,
-                onValueChange = {newText -> viewModel.onEmailChange(newText)},
+                onValueChange = {newText -> onAction(AuthAction.OnEmailChange(newText))},
                 placeholder = {
                     Text(
                         text = "example@gmail.com",
@@ -150,7 +181,7 @@ fun LoginScreen(viewModel: AuthViewModel, onBack: () -> Unit, onSignupClick: () 
             TextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = state.password,
-                onValueChange = {newText -> viewModel.onPasswordChange(newText)},
+                onValueChange = {newText -> onAction(AuthAction.OnPasswordChange(newText))},
                 visualTransformation = PasswordVisualTransformation(),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = SurfaceSoft,
@@ -181,7 +212,7 @@ fun LoginScreen(viewModel: AuthViewModel, onBack: () -> Unit, onSignupClick: () 
                         .fillMaxWidth()
                         .height(50.dp)
                     ,
-                    onClick = {},
+                    onClick = {onAction(AuthAction.OnLoginClick)},
                     shape = RoundedCornerShape(18.dp)
 
                 ) {
@@ -218,7 +249,7 @@ fun LoginScreen(viewModel: AuthViewModel, onBack: () -> Unit, onSignupClick: () 
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedButton(
-                onClick = { },
+                onClick = {onAction(AuthAction.OnGoogleSignInClick)},
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),

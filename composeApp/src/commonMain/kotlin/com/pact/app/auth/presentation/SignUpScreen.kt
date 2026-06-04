@@ -1,4 +1,4 @@
-package com.pact.app.auth
+package com.pact.app.auth.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -6,23 +6,17 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -30,9 +24,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -42,7 +35,6 @@ import org.jetbrains.compose.resources.painterResource
 import pact.composeapp.generated.resources.Res
 import pact.composeapp.generated.resources.bootstrap_arrow_left_square
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -50,12 +42,39 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.pact.app.Primary
 import com.pact.app.SurfaceSoft
-import com.pact.app.Text2
 import com.pact.app.Text3
 
 @Composable
-fun SignUpScreen(viewModel: AuthViewModel, onBack: () -> Unit, onLoginClick: () -> Unit){
+fun SignUpScreenRoot(
+    viewModel: AuthViewModel,
+    onBack: () -> Unit,
+    onLoginClick: () -> Unit,
+    navToHome: () -> Unit
+){
     val state by viewModel.state.collectAsState()
+
+    LaunchedEffect(state.isLoggedIn) {
+        if (state.isLoggedIn) {
+            navToHome()
+        }
+    }
+
+    SignUpScreen(
+        state = state,
+        onAction = viewModel::onAction,
+        onBack = onBack,
+        onLoginClick = onLoginClick
+    )
+}
+
+@Composable
+private fun SignUpScreen(
+    state: AuthState,
+    onAction: (AuthAction) -> Unit,
+    onBack: () -> Unit,
+    onLoginClick: () -> Unit
+)
+{
 
     Column(
         modifier = Modifier
@@ -121,7 +140,7 @@ fun SignUpScreen(viewModel: AuthViewModel, onBack: () -> Unit, onLoginClick: () 
             TextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = state.email,
-                onValueChange = {newText -> viewModel.onEmailChange(newText)},
+                onValueChange = {newText -> onAction(AuthAction.OnEmailChange(newText))},
                 placeholder = {
                     Text(
                         text = "example@gmail.com",
@@ -149,7 +168,7 @@ fun SignUpScreen(viewModel: AuthViewModel, onBack: () -> Unit, onLoginClick: () 
             TextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = state.password,
-                onValueChange = {newText -> viewModel.onPasswordChange(newText)},
+                onValueChange = {newText -> onAction(AuthAction.OnPasswordChange(newText))},
                 visualTransformation = PasswordVisualTransformation(),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = SurfaceSoft,
@@ -182,7 +201,7 @@ fun SignUpScreen(viewModel: AuthViewModel, onBack: () -> Unit, onLoginClick: () 
                     .fillMaxWidth()
                     .height(50.dp)
                 ,
-                onClick = {},
+                onClick = {onAction(AuthAction.OnSignUpClick)},
                 shape = RoundedCornerShape(18.dp)
 
             ) {
@@ -204,7 +223,7 @@ fun SignUpScreen(viewModel: AuthViewModel, onBack: () -> Unit, onLoginClick: () 
 
                 )
                 Text(
-                    modifier = Modifier.clickable() { onLoginClick() },
+                    modifier = Modifier.clickable() {onLoginClick()},
                     text="Log in",
                     style= MaterialTheme.typography.labelSmall,
                     fontWeight = FontWeight.Bold,
