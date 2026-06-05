@@ -7,5 +7,7 @@ import kotlinx.datetime.todayIn
 
 data class CalendarState(
     val selectedView: CalendarView = CalendarView.MONTH,
-    val selectedDate: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
+    val selectedDate: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault()),
+    val todayDate: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
+
 )

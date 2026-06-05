@@ -29,7 +29,7 @@ val PlusJakartaSans
 val openingScreenBackgroundGradient = listOf(Color(0xFFEDE7FF), Color(0xFFFDFCFF))
 
 val BgCanvas       = Color(0xFFECE7F5)
-val Bg             = Color(0xFFFDFCFF)
+val Bg             = Color(0xFFFAF5FF)
 val Surface        = Color(0xFFFFFFFF)
 val SurfaceWash    = Color(0xFFF3EDFF)
 val SurfaceSoft    = Color(0xFFF8F4FF)
@@ -91,6 +91,12 @@ fun AppTypography(): Typography {
             fontSize = 15.sp,
             fontWeight = FontWeight.Medium,
             color = Text2
+        ),
+        titleLarge = TextStyle(
+            fontFamily = plusJakartaSans,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            color = Text1
         ),
     )
 }

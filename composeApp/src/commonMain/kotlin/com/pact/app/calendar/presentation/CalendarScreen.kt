@@ -64,14 +64,15 @@ private fun CalendarScreen(
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.Start,
     ) {
-        Header()
+        Header(state=state)
         Spacer(modifier = Modifier.height(5.dp))
         ViewSelector(
             selectedView = state.selectedView,
             onViewSelected = { onAction(CalendarAction.OnSelectedViewChange(it)) }
         )
+        Spacer(modifier = Modifier.height(15.dp))
         when (state.selectedView) {
-            CalendarView.MONTH -> MonthView()
+            CalendarView.MONTH -> MonthView(state, onAction)
             CalendarView.WEEK -> WeekView()
             CalendarView.DAY -> DayView()
         }
@@ -79,7 +80,15 @@ private fun CalendarScreen(
 }
 
 @Composable
-private fun Header() {
+private fun Header(state: CalendarState) {
+
+    val dayOfWeek = state.todayDate.dayOfWeek.name.take(3).lowercase().replaceFirstChar { it.uppercase() }
+    val month = state.todayDate.month.name.take(3).lowercase().replaceFirstChar { it.uppercase() }
+    val day = state.todayDate.dayOfMonth
+    val viewLabel = state.selectedView.name.lowercase().replaceFirstChar { it.uppercase() }
+
+    val subtitleText = "$dayOfWeek, $month $day · $viewLabel view"
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -93,8 +102,9 @@ private fun Header() {
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface
             )
+
             Text(
-                text = "Tue, May 12 · Month view", // TOOD: Update with today date
+                text = subtitleText,
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
