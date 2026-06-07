@@ -1,4 +1,4 @@
-package com.pact.app
+package com.pact.app.core.ui
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size
