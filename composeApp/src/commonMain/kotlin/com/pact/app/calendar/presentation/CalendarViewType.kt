@@ -1,5 +1,5 @@
 package com.pact.app.calendar.presentation
 
-enum class CalendarView{
+enum class CalendarViewType{
     MONTH, WEEK, DAY
 }

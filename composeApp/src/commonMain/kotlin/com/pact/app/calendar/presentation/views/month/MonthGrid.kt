@@ -83,7 +83,9 @@ fun MonthGrid(
                             isToday = isToday,
                             isSelected = isSelected,
                             onClick = {if (day != null) onAction(CalendarAction.OnDaySelected(day))},
-                            hasEvents = true
+                            hasEvents = day != null && state.events.any {
+                                it.date == LocalDate(state.selectedDate.year, state.selectedDate.month, day)
+                            }
                         )
                     }
                 }

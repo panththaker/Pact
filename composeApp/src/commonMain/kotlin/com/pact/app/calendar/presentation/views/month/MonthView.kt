@@ -42,6 +42,8 @@ fun MonthView(
         Spacer(Modifier.height(8.dp))
         MonthGrid(state, onAction)
     }
+    Spacer(Modifier.height(16.dp))
+    MonthEventList(state, onAction)
 
 }
 

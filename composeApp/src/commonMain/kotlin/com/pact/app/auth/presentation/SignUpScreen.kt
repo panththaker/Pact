@@ -49,13 +49,13 @@ fun SignUpScreenRoot(
     viewModel: AuthViewModel,
     onBack: () -> Unit,
     onLoginClick: () -> Unit,
-    navToHome: () -> Unit
+    navToCalendar: () -> Unit
 ){
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(state.isLoggedIn) {
         if (state.isLoggedIn) {
-            navToHome()
+            navToCalendar()
         }
     }
 
@@ -135,6 +135,32 @@ private fun SignUpScreen(
         Column (
             modifier = Modifier.fillMaxWidth()
         ){
+            Text("First Name")
+            Spacer(modifier = Modifier.height(10.dp))
+            TextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = state.firstName,
+                onValueChange = { newText -> onAction(AuthAction.OnFirstNameChange(newText)) },
+                placeholder = {
+                    Text(
+                        text = "John",
+                        color = Text3,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                },
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = SurfaceSoft,
+                    unfocusedContainerColor = SurfaceSoft,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedTextColor = Text1,
+                    unfocusedTextColor = Text1,
+                    cursorColor = Primary,
+                ),
+                shape = RoundedCornerShape(12.dp)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+
             Text("Email")
             Spacer(modifier = Modifier.height(10.dp))
             TextField(
@@ -179,6 +205,13 @@ private fun SignUpScreen(
                     unfocusedTextColor = Text1,
                     cursorColor = Primary,
                 ),
+                placeholder = {
+                    Text(
+                        text = "Password",
+                        color = Text3,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                },
                 shape = RoundedCornerShape(12.dp),
             )
 

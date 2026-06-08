@@ -31,7 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import com.pact.app.PactAvatar
+import com.pact.app.core.ui.PactAvatar
 import com.pact.app.Primary
 import com.pact.app.SurfaceSoft
 import com.pact.app.SurfaceWash
@@ -56,13 +56,13 @@ fun LoginScreenRoot(
     viewModel: AuthViewModel,
     onBack: () -> Unit,
     onSignupClick: () -> Unit,
-    navToHome: () -> Unit
+    navToCalendar: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(state.isLoggedIn) {
         if (state.isLoggedIn) {
-            navToHome()
+            navToCalendar()
         }
     }
 
@@ -192,6 +192,13 @@ private fun LoginScreen(
                     unfocusedTextColor = Text1,
                     cursorColor = Primary,
                 ),
+                placeholder = {
+                    Text(
+                        text = "Password",
+                        color = Text3,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                },
                 shape = RoundedCornerShape(12.dp),
             )
 

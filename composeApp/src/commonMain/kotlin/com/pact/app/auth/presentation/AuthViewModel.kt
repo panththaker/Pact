@@ -20,16 +20,21 @@ class AuthViewModel(private val authRepository: AuthRepository): ViewModel() {
             is AuthAction.OnPasswordChange -> {
                 _state.update {it.copy(password=action.password) }
             }
+            is AuthAction.OnFirstNameChange -> {
+                _state.update {it.copy(password=action.firstName) }
+            }
 
             is AuthAction.OnLoginClick -> {
                 viewModelScope.launch {
                     _state.update {it.copy(isLoading = true) }
+                    _state.update {it.copy(isLoggedIn = true) } // TODO: For debug make it work for supabase
                 }
             }
 
             is AuthAction.OnSignUpClick -> {
                 viewModelScope.launch {
                     _state.update { it.copy(isLoading = true) }
+                    _state.update {it.copy(isLoggedIn = true) }
                 }
             }
 

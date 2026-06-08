@@ -19,9 +19,9 @@ class AuthRepositoryImpl(private val authRemoteDataSource: AuthRemoteDataSource)
         }
 
     }
-    override suspend fun signUp(email: String, password:String, username:String): Result<User>{
+    override suspend fun signUp(email: String, password:String, firstName:String): Result<User>{
         try {
-            val userDto: UserDto? = authRemoteDataSource.signup(email, password, username)
+            val userDto: UserDto? = authRemoteDataSource.signup(email, password, firstName)
             val user: User? = userDto?.toDomain()
 
             if(user == null){

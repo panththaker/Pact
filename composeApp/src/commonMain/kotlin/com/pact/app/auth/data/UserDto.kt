@@ -10,11 +10,11 @@ import kotlinx.serialization.Serializable
 data class UserDto(
     @SerialName("user_id") val id: String,
     @SerialName("email_address") val email: String,
-    @SerialName("display_name") val username: String
+    @SerialName("display_name") val firstName: String
 ) {
     fun toDomain() = User(
         id = id,
         email = email,
-        username = username
+        firstName = firstName
     )
 }

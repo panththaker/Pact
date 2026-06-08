@@ -4,7 +4,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -12,6 +11,8 @@ import com.pact.app.auth.presentation.AuthViewModel
 import com.pact.app.auth.presentation.LoginScreenRoot
 import com.pact.app.auth.presentation.OpeningScreen
 import com.pact.app.auth.presentation.SignUpScreenRoot
+import com.pact.app.calendar.presentation.CalendarScreenRoot
+import com.pact.app.calendar.presentation.CalendarViewModel
 import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -19,6 +20,10 @@ import org.koin.compose.viewmodel.koinViewModel
 @Serializable object SignUp
 
 @Serializable object Login{}
+@Serializable object Calendar
+@Serializable object Todo
+@Serializable object Chat
+@Serializable object Profile
 
 
 @Composable
@@ -46,7 +51,7 @@ fun Navigation(){
                 viewModel = viewModel,
                 onBack = { navController.popBackStack() },
                 onLoginClick = {navController.navigate(Login)},
-                navToHome = {}
+                navToCalendar = {navController.navigate(Calendar)}
 
             )
         }
@@ -56,10 +61,66 @@ fun Navigation(){
                 viewModel = viewModel,
                 onBack = { navController.popBackStack() },
                 onSignupClick = {navController.navigate(SignUp)},
-                navToHome = {}
+                navToCalendar = {navController.navigate(Calendar)}
             )
         }
 
+        composable<Calendar> {
+            val viewModel = koinViewModel<CalendarViewModel>()
+            CalendarScreenRoot(
+                viewModel = viewModel,
+                onNavigateToTodo = { navController.navigate(Todo) },
+                onNavigateToChat = { navController.navigate(Chat) },
+                onNavigateToProfile = { navController.navigate(Profile) }
+            )
+        }
+        composable<Todo> { }
+        composable<Chat> { }
+        composable<Profile> { }
 
     }
 }
+
+
+// TODO: Make the navbar on each individual screen through individual scaffolds and make the bottom bar a component on a core file or smth along those lines
+// TODO: Make a new composables for each page
+//@Composable
+//fun MainScreen() {
+//    val navController = rememberNavController()
+//    var selectedTab by remember { mutableStateOf(NavTab.CALENDAR) }
+//
+//    Scaffold(
+//        bottomBar = {
+//            PactNavBar(
+//                selectedTab = selectedTab,
+//                onTabSelected = { tab ->
+//                    selectedTab = tab
+//                    when (tab) {
+//                        NavTab.CALENDAR -> navController.navigate(Calendar)
+//                        NavTab.TODO -> navController.navigate(Todo)
+//                        NavTab.CHAT -> navController.navigate(Chat)
+//                        NavTab.PROFILE -> navController.navigate(Profile)
+//                    }
+//                }
+//            )
+//        },
+//        contentWindowInsets = WindowInsets.safeDrawing
+//
+//    ) { paddingValues ->
+//        NavHost(
+//            navController = navController,
+//            startDestination = Calendar,
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .padding(bottom = paddingValues.calculateBottomPadding())
+//        ) {
+//            composable<Calendar> {
+//                val viewModel = koinViewModel<CalendarViewModel>()
+//                CalendarScreenRoot(viewModel)
+//            }
+//            composable<Todo> { /* TodoScreen() */ }
+//            composable<Chat> { /* ChatScreen() */ }
+//            composable<Profile> { /* ProfileScreen() */ }
+//        }
+//    }
+//}
