@@ -2,6 +2,7 @@ package com.pact.app.auth.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pact.app.auth.domain.AuthRepository
+import com.pact.app.auth.domain.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,7 +22,7 @@ class AuthViewModel(private val authRepository: AuthRepository): ViewModel() {
                 _state.update {it.copy(password=action.password) }
             }
             is AuthAction.OnFirstNameChange -> {
-                _state.update {it.copy(password=action.firstName) }
+                _state.update {it.copy(firstName =action.firstName) }
             }
 
             is AuthAction.OnLoginClick -> {
@@ -32,9 +33,22 @@ class AuthViewModel(private val authRepository: AuthRepository): ViewModel() {
             }
 
             is AuthAction.OnSignUpClick -> {
+                _state.update { it.copy(isLoading = true) }
                 viewModelScope.launch {
-                    _state.update { it.copy(isLoading = true) }
-                    _state.update {it.copy(isLoggedIn = true) }
+                    val result: Result<User> = authRepository.signUp(
+                        email = _state.value.email,
+                        password = _state.value.password,
+                        firstName = _state.value.firstName)
+                    result.fold(
+                        onSuccess = { user ->
+                            _state.update { it.copy(isLoggedIn = true) }
+                        },
+                        onFailure = { error ->
+                            println("Signup error: ${error.message}")
+                            _state.update { it.copy(errorMessage = error.message) }
+                        }
+                    )
+                    _state.update { it.copy(isLoading = false) }
                 }
             }
 

@@ -2,11 +2,13 @@ package com.pact.app.calendar.presentation
 
 import com.pact.app.core.domain.PactEvent
 import com.pact.app.core.domain.RepeatType
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
 
+@OptIn(ExperimentalTime::class)
 data class CalendarState(
     val selectedView: CalendarViewType = CalendarViewType.MONTH,
     val selectedDate: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault()),

@@ -5,12 +5,12 @@ import kotlinx.datetime.LocalDate
 fun LocalDate.formatDisplay(): String {
     val dow = dayOfWeek.name.take(3).lowercase().replaceFirstChar { it.uppercase() }
     val mon = month.name.take(3).lowercase().replaceFirstChar { it.uppercase() }
-    return "$dow, $mon $dayOfMonth"
+    return "$dow, $mon $day"
 }
 
 fun LocalDate.formatShort(): String {
     val mon = month.name.take(3).lowercase().replaceFirstChar { it.uppercase() }
-    return "$mon $dayOfMonth"
+    return "$mon $day"
 }
 
 // Converts mins from midnight to 9:30 AM type thing

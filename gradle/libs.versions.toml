@@ -18,6 +18,8 @@ material3 = "1.10.0-alpha05"
 koin = "4.2.1"
 koin-ksp = "4.2.1"
 kotlinx-datetime = "0.6.1"
+supabase = "3.6.0"
+ktor = "3.4.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -46,6 +48,13 @@ koin-compiler = {module = "io.insert-koin:koin-ksp-compiler", version = "koin-ks
 koin-compose = {module = "io.insert-koin:koin-compose", version = "koin"}
 koin-core = {module = "io.insert-koin:koin-core", version.ref = "koin"}
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+
+supabase-auth = { module = "io.github.jan-tennert.supabase:auth-kt", version.ref = "supabase" }
+supabase-bom = { module = "io.github.jan-tennert.supabase:bom", version.ref = "supabase" }
+supabase-postgrest = { module = "io.github.jan-tennert.supabase:postgrest-kt", version.ref = "supabase" }
+supabase-realtime = { module = "io.github.jan-tennert.supabase:realtime-kt", version.ref = "supabase" }
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 
 
 

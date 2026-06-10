@@ -161,7 +161,7 @@ private fun Header(state: CalendarState) {
 
     val dayOfWeek = state.todayDate.dayOfWeek.name.take(3).lowercase().replaceFirstChar { it.uppercase() }
     val month = state.todayDate.month.name.take(3).lowercase().replaceFirstChar { it.uppercase() }
-    val day = state.todayDate.dayOfMonth
+    val day = state.todayDate.day
     val viewLabel = state.selectedView.name.lowercase().replaceFirstChar { it.uppercase() }
 
     val subtitleText = "$dayOfWeek, $month $day · $viewLabel view"

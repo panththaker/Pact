@@ -16,6 +16,7 @@ import com.pact.app.calendar.presentation.CalendarState
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.isoDayNumber
 import kotlinx.datetime.Month
+import kotlinx.datetime.number
 
 
 @Composable
@@ -23,10 +24,14 @@ fun MonthGrid(
     state: CalendarState,
     onAction: (CalendarAction) -> Unit
 ) {
-
-    val isLeapYear: Boolean = state.selectedDate.year % 4 == 0
-    val daysInSelectedMonth = state.selectedDate.month.length(isLeapYear)
-
+    val daysInSelectedMonth = state.selectedDate.month.number.let { month ->
+        val year = state.selectedDate.year
+        when (month) {
+            2 -> if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) 29 else 28
+            4, 6, 9, 11 -> 30
+            else -> 31
+        }
+    }
 
     val firstDayOfSelectedMonth = LocalDate(state.selectedDate.year, state.selectedDate.month, 1)
     val numberOfNulls = firstDayOfSelectedMonth.dayOfWeek.isoDayNumber % 7
@@ -68,11 +73,11 @@ fun MonthGrid(
                 for (day in week) {
 
                     val isToday = day != null &&
-                            day == state.todayDate.dayOfMonth &&
+                            day == state.todayDate.day &&
                             state.selectedDate.month == state.todayDate.month &&
                             state.selectedDate.year == state.todayDate.year
 
-                    val isSelected = day != null && day == state.selectedDate.dayOfMonth
+                    val isSelected = day != null && day == state.selectedDate.day
 
                     Box(
                         contentAlignment = Alignment.Center,

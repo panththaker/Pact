@@ -61,7 +61,7 @@ fun PactAvatar(size: Dp = 112.dp) {
         // Smile
         val path = Path().apply {
             moveTo(s * 0.38f, s * 0.62f)
-            quadraticBezierTo(s * 0.5f, s * 0.72f, s * 0.62f, s * 0.62f)
+            quadraticTo(s * 0.5f, s * 0.72f, s * 0.62f, s * 0.62f)
         }
         drawPath(
             path = path,
