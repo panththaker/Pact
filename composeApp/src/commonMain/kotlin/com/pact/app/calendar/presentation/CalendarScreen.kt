@@ -45,11 +45,13 @@ import com.pact.app.Text3
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Brush
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.test.add_2
 import com.pact.app.PrimaryTint
 import com.pact.app.calendar.presentation.views.day.DayView
 import com.pact.app.calendar.presentation.views.month.MonthView
 import com.pact.app.calendar.presentation.views.week.WeekView
+import com.pact.app.core.domain.UserSession
 import com.pact.app.core.ui.NavTab
 import com.pact.app.core.ui.PactNavBar
 
@@ -60,9 +62,11 @@ fun CalendarScreenRoot(
     onNavigateToChat: () -> Unit,
     onNavigateToProfile: () -> Unit
 ){
-    val state by viewModel.state.collectAsState()
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val session by viewModel.session.collectAsStateWithLifecycle()
     CalendarScreen(
         state = state,
+        session = session,
         onAction = viewModel::onAction,
         onNavigateToTodo = onNavigateToTodo,
         onNavigateToChat = onNavigateToChat,
@@ -74,6 +78,7 @@ fun CalendarScreenRoot(
 @Composable
 private fun CalendarScreen(
     state: CalendarState,
+    session: UserSession?,
     onAction:(CalendarAction) -> Unit,
     onNavigateToTodo: () -> Unit,
     onNavigateToChat: () -> Unit,
@@ -136,10 +141,16 @@ private fun CalendarScreen(
                 .padding(paddingValues)
                 .padding(horizontal = 24.dp, vertical = 16.dp)
                 .imePadding()
-                .verticalScroll(rememberScrollState()),
+                .then(
+                    if (state.selectedView == CalendarViewType.MONTH) {
+                        Modifier.verticalScroll(rememberScrollState())
+                    } else {
+                        Modifier
+                    }
+                ),
             horizontalAlignment = Alignment.Start,
         ) {
-            Header(state=state)
+            Header(state=state, session=session)
             Spacer(modifier = Modifier.height(5.dp))
             ViewSelector(
                 selectedView = state.selectedView,
@@ -148,7 +159,7 @@ private fun CalendarScreen(
             Spacer(modifier = Modifier.height(15.dp))
             when (state.selectedView) {
                 CalendarViewType.MONTH -> MonthView(state, onAction)
-                CalendarViewType.WEEK -> WeekView()
+                CalendarViewType.WEEK -> WeekView(state, onAction)
                 CalendarViewType.DAY -> DayView()
             }
         }
@@ -157,7 +168,7 @@ private fun CalendarScreen(
 }
 
 @Composable
-private fun Header(state: CalendarState) {
+private fun Header(state: CalendarState, session: UserSession?) {
 
     val dayOfWeek = state.todayDate.dayOfWeek.name.take(3).lowercase().replaceFirstChar { it.uppercase() }
     val month = state.todayDate.month.name.take(3).lowercase().replaceFirstChar { it.uppercase() }
@@ -175,7 +186,7 @@ private fun Header(state: CalendarState) {
 
         Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(
-                text = "Good morning, Sarah.", // TODO: Update with the user name
+                text = "Good morning, ${session?.firstName}.", // TODO: Update with the user name
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface
             )

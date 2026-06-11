@@ -25,6 +25,7 @@ import com.pact.app.icons.chevron_left
 import com.pact.app.icons.chevron_right
 import com.pact.app.icons.keyboard_arrow_down
 import androidx.compose.ui.Alignment
+import kotlinx.datetime.DateTimeUnit
 
 
 @Composable
@@ -97,7 +98,7 @@ private fun MonthHeader(
         ){
             // Left Arrow
             IconButton(
-                onClick = {onAction(CalendarAction.OnPreviousMonth)}
+                onClick = {onAction(CalendarAction.OnPreviousUnitOfTime(DateTimeUnit.MONTH))}
             ){
                 Icon(
                     modifier = Modifier
@@ -109,7 +110,7 @@ private fun MonthHeader(
 
             // Right Arrow
             IconButton(
-                onClick = {onAction(CalendarAction.OnNextMonth)}
+                onClick = {onAction(CalendarAction.OnNextUnitOfTime(DateTimeUnit.MONTH))}
             ){
                 Icon(
                     modifier = Modifier

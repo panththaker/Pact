@@ -10,8 +10,8 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun ScreenPreview(){
     PactTheme{
-//        val viewModel = koinViewModel<CalendarViewModel>()
-//        CalendarScreenRoot(viewModel);
+        val viewModel = koinViewModel<CalendarViewModel>()
+        CalendarScreenRoot(viewModel, {}, {}, {});
     }
 }
 
