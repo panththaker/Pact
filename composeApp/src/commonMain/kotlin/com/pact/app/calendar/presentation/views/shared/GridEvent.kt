@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.pact.app.core.domain.PactEvent
 
 @Composable
-fun Event(
+fun GridEvent(
     event: PactEvent,
     modifier: Modifier
 ){

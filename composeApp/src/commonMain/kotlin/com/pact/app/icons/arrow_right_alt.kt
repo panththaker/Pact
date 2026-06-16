@@ -10,14 +10,14 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
 @Suppress("CheckReturnValue")
-public val add_2: ImageVector
+public val arrow_right_alt: ImageVector
     get() {
-        if (_add_2 != null) {
-            return _add_2!!
+        if (_arrow_right_alt != null) {
+            return _arrow_right_alt!!
         }
-        _add_2 =
+        _arrow_right_alt =
             ImageVector.Builder(
-                name = "add_2",
+                name = "arrow_right_alt",
                 defaultWidth = 24.dp,
                 defaultHeight = 24.dp,
                 viewportWidth = 24f,
@@ -35,24 +35,21 @@ public val add_2: ImageVector
                         strokeLineMiter = 1f,
                         pathFillType = PathFillType.Companion.NonZero,
                     ) {
-                        moveTo(11f, 21f)
-                        verticalLineTo(13f)
-                        horizontalLineTo(3f)
+                        moveTo(14f, 18f)
+                        lineTo(12.6f, 16.55f)
+                        lineTo(16.15f, 13f)
+                        horizontalLineTo(4f)
                         verticalLineTo(11f)
-                        horizontalLineToRelative(8f)
-                        verticalLineTo(3f)
-                        horizontalLineToRelative(2f)
-                        verticalLineToRelative(8f)
-                        horizontalLineToRelative(8f)
-                        verticalLineToRelative(2f)
-                        horizontalLineTo(13f)
-                        verticalLineToRelative(8f)
-                        horizontalLineTo(11f)
+                        horizontalLineTo(16.15f)
+                        lineTo(12.6f, 7.45f)
+                        lineTo(14f, 6f)
+                        lineToRelative(6f, 6f)
+                        lineToRelative(-6f, 6f)
                         close()
                     }
                 }
                 .build()
-        return _add_2!!
+        return _arrow_right_alt!!
     }
 
-private var _add_2: ImageVector? = null
+private var _arrow_right_alt: ImageVector? = null

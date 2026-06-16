@@ -9,5 +9,4 @@ sealed interface CalendarAction {
     data class OnPreviousUnitOfTime(val unitOfTime: DateTimeUnit.DateBased) : CalendarAction
     data class OnNextUnitOfTime(val unitOfTime: DateTimeUnit.DateBased) : CalendarAction
 
-    // Day Actions
 }

@@ -29,6 +29,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.plus
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import com.pact.app.calendar.presentation.views.shared.TimeLabels
 
 @Composable
 fun WeekGrid(
@@ -93,31 +94,4 @@ private fun WeekDayHeaders(
             }
         }
     }
-}
-
-@Composable
-private fun TimeLabels(){
-    val times: List<Int> = (1..23).toList()
-    Column {
-        for(time in times){
-            val label = when {
-                time == 12 -> "12 PM"
-                time > 12 -> "${time - 12} PM"
-                else -> "$time AM"
-            }
-            Box(
-                modifier = Modifier
-                    .height(HOUR_HEIGHT_DP.dp)
-                    .wrapContentWidth(),
-                contentAlignment = Alignment.BottomEnd
-            ) {
-                Text(
-                    text = label,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        }
-    }
-
 }

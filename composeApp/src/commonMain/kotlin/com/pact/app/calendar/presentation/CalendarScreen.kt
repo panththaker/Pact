@@ -46,7 +46,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Brush
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.test.add_2
+import com.pact.app.icons.add_2
 import com.pact.app.PrimaryTint
 import com.pact.app.calendar.presentation.views.day.DayView
 import com.pact.app.calendar.presentation.views.month.MonthView
@@ -160,7 +160,7 @@ private fun CalendarScreen(
             when (state.selectedView) {
                 CalendarViewType.MONTH -> MonthView(state, onAction)
                 CalendarViewType.WEEK -> WeekView(state, onAction)
-                CalendarViewType.DAY -> DayView()
+                CalendarViewType.DAY -> DayView(state, onAction)
             }
         }
 

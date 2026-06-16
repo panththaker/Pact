@@ -10,14 +10,14 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
 @Suppress("CheckReturnValue")
-public val add_2: ImageVector
+public val close: ImageVector
     get() {
-        if (_add_2 != null) {
-            return _add_2!!
+        if (_close != null) {
+            return _close!!
         }
-        _add_2 =
+        _close =
             ImageVector.Builder(
-                name = "add_2",
+                name = "close",
                 defaultWidth = 24.dp,
                 defaultHeight = 24.dp,
                 viewportWidth = 24f,
@@ -35,24 +35,24 @@ public val add_2: ImageVector
                         strokeLineMiter = 1f,
                         pathFillType = PathFillType.Companion.NonZero,
                     ) {
-                        moveTo(11f, 21f)
-                        verticalLineTo(13f)
-                        horizontalLineTo(3f)
-                        verticalLineTo(11f)
-                        horizontalLineToRelative(8f)
-                        verticalLineTo(3f)
-                        horizontalLineToRelative(2f)
-                        verticalLineToRelative(8f)
-                        horizontalLineToRelative(8f)
-                        verticalLineToRelative(2f)
-                        horizontalLineTo(13f)
-                        verticalLineToRelative(8f)
-                        horizontalLineTo(11f)
+                        moveTo(6.4f, 19f)
+                        lineTo(5f, 17.6f)
+                        lineTo(10.6f, 12f)
+                        lineTo(5f, 6.4f)
+                        lineTo(6.4f, 5f)
+                        lineTo(12f, 10.6f)
+                        lineTo(17.6f, 5f)
+                        lineTo(19f, 6.4f)
+                        lineTo(13.4f, 12f)
+                        lineTo(19f, 17.6f)
+                        lineTo(17.6f, 19f)
+                        lineTo(12f, 13.4f)
+                        lineTo(6.4f, 19f)
                         close()
                     }
                 }
                 .build()
-        return _add_2!!
+        return _close!!
     }
 
-private var _add_2: ImageVector? = null
+private var _close: ImageVector? = null

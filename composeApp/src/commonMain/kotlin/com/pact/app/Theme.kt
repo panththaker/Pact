@@ -98,6 +98,13 @@ fun AppTypography(): Typography {
             fontWeight = FontWeight.Bold,
             color = Text1
         ),
+        headlineSmall = TextStyle(
+            fontFamily = plusJakartaSans,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            letterSpacing = (-0.3).sp,
+            color = Text1
+        ),
     )
 }
 
