@@ -1,6 +1,7 @@
 package com.pact.app.calendar.presentation.event
 
 import androidx.lifecycle.ViewModel
+import jdk.jfr.Event
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -38,6 +39,57 @@ class EventViewModel(
                 _state.update {
                     it.copy(
                         title = action.taskName
+                    )
+                }
+            }
+
+            is EventAction.OnNotesChange -> {
+                _state.update {
+                    it.copy(
+                        notes = action.notes
+                    )
+                }
+            }
+            is EventAction.OnColorChange -> {
+                _state.update {
+                    it.copy(
+                        color = action.color
+                    )
+                }
+            }
+
+
+            is EventAction.OpenSheet -> {
+                _state.update {
+                    it.copy(
+                        activeSheet = action.type
+                    )
+                }
+            }
+
+            is EventAction.CloseSheet -> {
+                _state.update {
+                    it.copy(
+                        activeSheet = null
+                    )
+                }
+            }
+
+            is EventAction.ConfirmTime -> {
+                _state.update {
+                    it.copy(
+                        startTime = if (action.isStartTime) action.minutes else it.startTime,
+                        endTime = if (!action.isStartTime) action.minutes else it.endTime,
+                        activeSheet = null
+                    )
+                }
+            }
+
+            is EventAction.ConfirmReminder -> {
+                _state.update {
+                    it.copy(
+                        reminder = action.reminder,
+                        activeSheet = null
                     )
                 }
             }

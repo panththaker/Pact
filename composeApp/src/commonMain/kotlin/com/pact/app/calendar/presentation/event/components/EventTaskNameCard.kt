@@ -28,7 +28,7 @@ import com.pact.app.core.utils.toDuration
 
 @Composable
 fun EventTaskNameCard(
-    onAction: (EventAction) -> Unit,
+    onTaskTitleChange: (String) -> Unit,
     startTime: Int,
     endTime: Int,
     taskName: String,
@@ -47,7 +47,7 @@ fun EventTaskNameCard(
         Column(modifier = Modifier.padding(horizontal = 4.dp, vertical = 8.dp)) {
             TextField(
                 value = taskName,
-                onValueChange = {onAction(EventAction.OnTaskTitleChange(it))},
+                onValueChange = onTaskTitleChange,
                 placeholder = { Text("Task Name") },
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color.Transparent,

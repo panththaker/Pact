@@ -1,6 +1,8 @@
 package com.pact.app.calendar.presentation
 
 import com.pact.app.core.domain.PactEvent
+import com.pact.app.core.domain.ReminderTime
+import com.pact.app.core.domain.ReminderType
 import com.pact.app.core.domain.RepeatType
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
@@ -21,7 +23,7 @@ data class CalendarState(
             startTime = 540,
             endTime = 660,
             color = 0xFF7C5CD9L,
-            reminder = 10,
+            reminder = ReminderTime(ReminderType.TEN_MIN),
             repeat = RepeatType.NONE,
             notes = null,
             isCompleted = false
@@ -33,7 +35,7 @@ data class CalendarState(
             startTime = 660,
             endTime = 720,
             color = 0xFFF5A623L,
-            reminder = null,
+            reminder = ReminderTime(ReminderType.NONE),
             repeat = RepeatType.NONE,
             notes = null,
             isCompleted = false
@@ -45,7 +47,7 @@ data class CalendarState(
             startTime = 750,
             endTime = 810,
             color = 0xFF4CAF50L,
-            reminder = null,
+            reminder = ReminderTime(ReminderType.NONE),
             repeat = RepeatType.NONE,
             notes = null,
             isCompleted = false
@@ -57,7 +59,7 @@ data class CalendarState(
             startTime = 840,
             endTime = 900,
             color = 0xFF7C5CD9L,
-            reminder = null,
+            reminder = ReminderTime(ReminderType.NONE),
             repeat = RepeatType.NONE,
             notes = null,
             isCompleted = false
@@ -69,7 +71,7 @@ data class CalendarState(
             startTime = 960,
             endTime = 990,
             color = 0xFFE91E63L,
-            reminder = null,
+            reminder = ReminderTime(ReminderType.NONE),
             repeat = RepeatType.NONE,
             notes = null,
             isCompleted = false
@@ -81,7 +83,7 @@ data class CalendarState(
             startTime = 1020,
             endTime = 1080,
             color = 0xFF4CAF50L,
-            reminder = null,
+            reminder = ReminderTime(ReminderType.NONE),
             repeat = RepeatType.NONE,
             notes = null,
             isCompleted = false
@@ -93,7 +95,7 @@ data class CalendarState(
             startTime = 1140,
             endTime = 1200,
             color = 0xFFF5A623L,
-            reminder = null,
+            reminder = ReminderTime(ReminderType.NONE),
             repeat = RepeatType.NONE,
             notes = null,
             isCompleted = false
@@ -105,7 +107,7 @@ data class CalendarState(
             startTime = 1200,
             endTime = 1230,
             color = 0xFF7C5CD9L,
-            reminder = null,
+            reminder = ReminderTime(ReminderType.NONE),
             repeat = RepeatType.NONE,
             notes = null,
             isCompleted = false

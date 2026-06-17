@@ -11,7 +11,7 @@ data class PactEvent(
     val startTime: Int, // "9:30 AM"
     val endTime: Int,   // "11:00 AM"
     val color: Long,         // the color tag
-    val reminder: Int?,       // minutes before, null = no reminder
+    val reminder: ReminderTime,       // minutes before, null = no reminder
     val repeat: RepeatType,   // enum: NONE, DAILY, WEEKLY, etc.
     val notes: String?,       // optional notes field
     val isCompleted: Boolean  // checkable in to do view

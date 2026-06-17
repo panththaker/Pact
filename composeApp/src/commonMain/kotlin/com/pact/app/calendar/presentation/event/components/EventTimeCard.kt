@@ -37,12 +37,10 @@ import com.pact.app.icons.timer
 fun EventTimeCard(
     startTime: Int,
     endTime: Int,
-    startTimeSelected: Boolean,
-    endTimeSelected: Boolean,
-    onClick: () -> Unit,
+    onStartTimeClick: () -> Unit,
+    onEndTimeClick: () -> Unit
 ) {
     Card(
-        onClick = onClick,
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
@@ -79,8 +77,7 @@ fun EventTimeCard(
                 TimeSelector(
                     label = "START",
                     time = startTime,
-                    isSelected = startTimeSelected,
-                    onClick = onClick
+                    onClick = onStartTimeClick
                 )
                 Icon(
                     imageVector = arrow_right_alt,
@@ -91,8 +88,7 @@ fun EventTimeCard(
                 TimeSelector(
                     label = "END",
                     time = endTime,
-                    isSelected = endTimeSelected,
-                    onClick = onClick
+                    onClick = onEndTimeClick
                 )
             }
         }
@@ -103,7 +99,6 @@ fun EventTimeCard(
 fun TimeSelector(
     label: String,
     time: Int,
-    isSelected: Boolean,
     onClick: () -> Unit
 ) {
     val amPm = if ((time / 60) < 12) "AM" else "PM"
@@ -113,24 +108,24 @@ fun TimeSelector(
         onClick = onClick,
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) Primary else SurfaceWash
+            containerColor = SurfaceWash
         ),
         elevation = CardDefaults.cardElevation(0.dp)
     ) {
         Column(
-            modifier = Modifier.padding(start = 18.dp, end = 36.dp, top = 12.dp, bottom = 12.dp)
+            modifier = Modifier.padding(start = 18.dp, end = 24.dp, top = 12.dp, bottom = 12.dp)
         ) {
             Text(
                 text = label,
                 style = MaterialTheme.typography.labelSmall,
-                color = if (isSelected) Color.White.copy(alpha = 0.7f) else Text3,
+                color = Text3,
                 letterSpacing = 1.5.sp
             )
             Text(
                 text = timeText,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = if (isSelected) Color.White else Text1
+                color = Text1
             )
         }
     }

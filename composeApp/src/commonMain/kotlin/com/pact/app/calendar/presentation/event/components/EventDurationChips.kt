@@ -34,31 +34,6 @@ fun EventDurationChips(
     val durations = listOf(15, 30, 45, 60, 90)
 
     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-        // Header
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text(
-                text = "QUICK DURATION",
-                style = MaterialTheme.typography.labelSmall,
-                fontWeight = FontWeight.Bold,
-                color = Text1,
-                letterSpacing = 1.5.sp
-            )
-            Icon(
-                imageVector = arrow_right_alt,
-                contentDescription = null,
-                tint = Text3,
-                modifier = Modifier.size(14.dp)
-            )
-            Text(
-                text = "sets end time",
-                style = MaterialTheme.typography.bodySmall,
-                color = Text3
-            )
-        }
-
         // Chips
         Row(
             horizontalArrangement = Arrangement.spacedBy(7.dp),

@@ -1,9 +1,13 @@
 package com.pact.app
 import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
+import com.pact.app.calendar.presentation.CalendarScreenRoot
+import com.pact.app.calendar.presentation.CalendarViewModel
 import com.pact.app.calendar.presentation.event.EventFormScreenRoot
 import com.pact.app.calendar.presentation.event.EventViewModel
 import com.pact.app.core.domain.PactEvent
+import com.pact.app.core.domain.ReminderTime
+import com.pact.app.core.domain.ReminderType
 import com.pact.app.core.domain.RepeatType
 import kotlinx.datetime.LocalDate
 import org.koin.compose.viewmodel.koinViewModel
@@ -19,13 +23,18 @@ fun ScreenPreview(){
             startTime = 570,  // 9:30 AM
             endTime = 660,    // 11:00 AM
             color = 0xFF9B8EC4,
-            reminder = 10,
+            reminder = ReminderTime(ReminderType.TEN_MIN),
             repeat = RepeatType.NONE,
             notes = "Work on the week view grid",
             isCompleted = false
         )
         val viewModel = koinViewModel<EventViewModel>()
         EventFormScreenRoot(viewModel, samplePactEvent, {})
+
+//        val viewModel = koinViewModel<CalendarViewModel>()
+//        CalendarScreenRoot(
+//            viewModel, {}, {}, {}
+//        )
     }
 }
 

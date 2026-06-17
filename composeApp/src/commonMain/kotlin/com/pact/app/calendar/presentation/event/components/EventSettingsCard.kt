@@ -27,26 +27,33 @@ import com.pact.app.Primary
 import com.pact.app.Text1
 import com.pact.app.Text3
 import com.pact.app.icons.add_alert
-import com.pact.app.icons.chevron_left
 import com.pact.app.icons.chevron_right
 import com.pact.app.icons.repeat
 
 // Reminder and Repeat Settings for the Add Task/Edit Task Screen
 
 @Composable
-fun EventSettingsCard(){
+fun EventSettingsCard(
+    labelOnReminder: String,
+    onReminderClick: () -> Unit,
+    onRepeatClick: () -> Unit,
+){
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+
+        // Reminder Card
         SettingsCard(
             icon = add_alert,
             label = "Reminder",
-            value = "10 min before",
-            onClick = {  }
+            value = labelOnReminder,
+            onClick = { onReminderClick() }
         )
+
+        // Repeat Card
         SettingsCard(
             icon = repeat,
             label = "Repeat",
             value = "Doesn't repeat",
-            onClick = { }
+            onClick = { onRepeatClick()}
         )
     }
 }
