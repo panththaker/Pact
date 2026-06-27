@@ -32,6 +32,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -62,6 +63,9 @@ fun CalendarScreenRoot(
     onNavigateToChat: () -> Unit,
     onNavigateToProfile: () -> Unit
 ){
+    LaunchedEffect(Unit) {
+        viewModel.onAction(CalendarAction.LoadEvents)
+    }
     val state by viewModel.state.collectAsStateWithLifecycle()
     val session by viewModel.session.collectAsStateWithLifecycle()
     CalendarScreen(

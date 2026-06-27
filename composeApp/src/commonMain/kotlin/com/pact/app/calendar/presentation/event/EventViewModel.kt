@@ -1,21 +1,52 @@
 package com.pact.app.calendar.presentation.event
 
 import androidx.lifecycle.ViewModel
-import jdk.jfr.Event
+import androidx.lifecycle.viewModelScope
+import com.pact.app.calendar.domain.CalendarRepository
+import com.pact.app.core.domain.PactEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 class EventViewModel(
+    private val calendarRepository: CalendarRepository
 ): ViewModel(){
     private val _state = MutableStateFlow(EventState())
     val state: StateFlow<EventState> = _state.asStateFlow()
 
-    fun OnAction(action: EventAction){
+    @OptIn(ExperimentalUuidApi::class)
+    fun onAction(action: EventAction){
         when(action){
             is EventAction.OnSaveEventFormScreen -> {
-                // Implement here
+                viewModelScope.launch {
+                    val currentState = _state.value
+                    val event = PactEvent(
+                        id = currentState.id ?: Uuid.random().toString(),
+                        title = currentState.title,
+                        date = currentState.date,
+                        startTime = currentState.startTime,
+                        endTime = currentState.endTime,
+                        color = currentState.color,
+                        reminder = currentState.reminder,
+                        repeat = currentState.repeat,
+                        notes = currentState.notes,
+                        isCompleted = currentState.isCompleted
+                    )
+
+                    val result = if (currentState.isAddMode) {
+                        calendarRepository.createEvent(event)
+                    } else {
+                        calendarRepository.updateEvent(event)
+                    }
+
+                    result
+                        .onSuccess { /* signal success — navigate back? */ }
+                        .onFailure { /* set an error state */ }
+                }
             }
 
             is EventAction.PopulateForm -> {
@@ -58,6 +89,13 @@ class EventViewModel(
                 }
             }
 
+            is EventAction.OnDurationSelected ->
+                _state.update {
+                    it.copy(
+                        endTime = it.startTime + action.duration
+                    )
+                }
+
 
             is EventAction.OpenSheet -> {
                 _state.update {
@@ -89,6 +127,24 @@ class EventViewModel(
                 _state.update {
                     it.copy(
                         reminder = action.reminder,
+                        activeSheet = null
+                    )
+                }
+            }
+
+            is EventAction.ConfirmRepeat -> {
+                _state.update {
+                    it.copy(
+                        repeat = action.repeatType,
+                        activeSheet = null
+                    )
+                }
+            }
+
+            is EventAction.ConfirmDate -> {
+                _state.update {
+                    it.copy(
+                        date = action.date,
                         activeSheet = null
                     )
                 }

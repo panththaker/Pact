@@ -1,5 +1,8 @@
 package com.pact.app.core.domain
 
-enum class RepeatType {
-    NONE, DAILY, WEEKLY, MONTHLY
+enum class RepeatType(val label: String) {
+    NONE("Doesn't repeat"),
+    DAILY("Daily"),
+    WEEKLY("Weekly"),
+    MONTHLY("Monthly")
 }

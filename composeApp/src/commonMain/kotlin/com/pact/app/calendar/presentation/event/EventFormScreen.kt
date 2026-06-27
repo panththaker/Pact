@@ -71,12 +71,12 @@ fun EventFormScreenRoot(
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(pactEvent) {
         if (pactEvent != null) {
-            viewModel.OnAction(EventAction.PopulateForm(pactEvent))
+            viewModel.onAction(EventAction.PopulateForm(pactEvent))
         }
     }
     EventFormScreen(
         state=state,
-        onAction = viewModel::OnAction,
+        onAction = viewModel::onAction,
         onBack=onBack
     )
 }
@@ -136,9 +136,9 @@ private fun EventFormScreen(
             )
 
             EventDateCard(
-                state.todayDate,
-                state.date,
-                {}
+                todayDate = state.todayDate,
+                date = state.date,
+                onClick = {onAction(EventAction.OpenSheet(BottomSheetType.DateSheet))}
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -155,15 +155,23 @@ private fun EventFormScreen(
 
             EventDurationChipsHeader()
             EventDurationChips(
-                90, {}
+                selectedDuration = (state.endTime - state.startTime),
+                onDurationSelected = { duration ->
+                    if (duration != null) {
+                        onAction(EventAction.OnDurationSelected(duration))
+                    } else {
+//                        onAction(EventAction.OnCustomDurationRequested) // opens time sheet instead
+                    }
+                }
             )
 
             Spacer(modifier = Modifier.height(12.dp))
 
             EventSettingsCard(
                 labelOnReminder = state.reminder.type.label,
+                labelOnRepeat = state.repeat.label,
                 onReminderClick = { onAction(EventAction.OpenSheet(BottomSheetType.ReminderSheet)) },
-                onRepeatClick = {}
+                onRepeatClick = {onAction(EventAction.OpenSheet(BottomSheetType.RepeatSheet))}
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -238,7 +246,10 @@ private fun EventFormScreen(
             sheetState = sheetState
         ){
             when(sheetType){
-                is BottomSheetType.DateSheet -> DatePickerSheet()
+                is BottomSheetType.DateSheet -> DatePickerSheet(
+                    selected = state.date,
+                    onConfirm = {date -> onAction(EventAction.ConfirmDate(date))}
+                )
                 is BottomSheetType.TimeSheetStartTime -> TimePickerSheet(
                     initialTime = state.startTime,
                     isStartTime = true,
@@ -253,7 +264,10 @@ private fun EventFormScreen(
                     selected = state.reminder,
                     onConfirm = {reminderTime -> onAction(EventAction.ConfirmReminder(reminderTime))}
                 )
-                is BottomSheetType.RepeatSheet -> RepeatSheet()
+                is BottomSheetType.RepeatSheet -> RepeatSheet(
+                    selected = state.repeat,
+                    onConfirm = {repeatType -> onAction(EventAction.ConfirmRepeat(repeatType))}
+                )
             }
 
         }

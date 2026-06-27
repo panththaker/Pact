@@ -5,9 +5,9 @@ import com.pact.app.core.domain.RepeatType
 import kotlinx.datetime.LocalDate
 
 sealed interface BottomSheetType {
-    data class DateSheet(val date: LocalDate) : BottomSheetType
+    data object DateSheet : BottomSheetType
     data object TimeSheetStartTime : BottomSheetType
     data object TimeSheetEndTime : BottomSheetType
     data object ReminderSheet: BottomSheetType
-    data class RepeatSheet(val repeat: RepeatType): BottomSheetType
+    data object RepeatSheet: BottomSheetType
 }

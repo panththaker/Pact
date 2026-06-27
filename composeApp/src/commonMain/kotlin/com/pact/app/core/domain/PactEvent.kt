@@ -1,9 +1,6 @@
 package com.pact.app.core.domain
 
-import androidx.compose.ui.graphics.Color
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalTime
-
 data class PactEvent(
     val id: String,           // unique identifier
     val title: String,        // "Deep focus: calendar mocks"

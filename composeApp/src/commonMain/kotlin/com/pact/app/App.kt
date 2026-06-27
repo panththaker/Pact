@@ -14,7 +14,7 @@ import org.koin.compose.viewmodel.koinViewModel
 
 
 @Composable
-fun ScreenPreview(){
+fun ScreenPreview() {
     PactTheme{
         val samplePactEvent = PactEvent(
             id = "test-123",
@@ -30,12 +30,12 @@ fun ScreenPreview(){
         )
         val viewModel = koinViewModel<EventViewModel>()
         EventFormScreenRoot(viewModel, samplePactEvent, {})
+    }
 
 //        val viewModel = koinViewModel<CalendarViewModel>()
 //        CalendarScreenRoot(
 //            viewModel, {}, {}, {}
 //        )
-    }
 }
 
 @Composable

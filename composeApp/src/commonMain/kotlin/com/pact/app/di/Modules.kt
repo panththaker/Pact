@@ -13,15 +13,21 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
+import com.pact.app.calendar.data.CalendarRemoteDataSource
+import com.pact.app.calendar.data.CalendarRepositoryImpl
+import com.pact.app.calendar.domain.CalendarRepository
 
 val sharedModule = module {
     singleOf(::SessionManager)
+    single{ supabase }
+
     singleOf(::AuthRemoteDataSource)
     singleOf(::AuthRepositoryImpl).bind<AuthRepository>()
-    single{ supabase }
     viewModelOf(::AuthViewModel)
 
 
+    singleOf(::CalendarRemoteDataSource)
+    singleOf(::CalendarRepositoryImpl).bind<CalendarRepository>()
     viewModelOf(::CalendarViewModel)
     viewModelOf(::EventViewModel)
 }

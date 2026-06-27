@@ -35,6 +35,7 @@ import com.pact.app.icons.repeat
 @Composable
 fun EventSettingsCard(
     labelOnReminder: String,
+    labelOnRepeat: String,
     onReminderClick: () -> Unit,
     onRepeatClick: () -> Unit,
 ){
@@ -52,7 +53,7 @@ fun EventSettingsCard(
         SettingsCard(
             icon = repeat,
             label = "Repeat",
-            value = "Doesn't repeat",
+            value = labelOnRepeat,
             onClick = { onRepeatClick()}
         )
     }

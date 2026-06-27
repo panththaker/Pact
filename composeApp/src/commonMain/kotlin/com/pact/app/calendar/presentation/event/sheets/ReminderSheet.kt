@@ -74,7 +74,7 @@ fun ReminderSheet(
             modifier = Modifier.fillMaxWidth()
         ) {
             ReminderType.entries.forEach { type ->
-                val isSelected = selected?.type == type
+                val isSelected = selected.type == type
                 Surface(
                     onClick = { onConfirm(ReminderTime(type)) },
                     color = if (isSelected) SurfaceWash else Color.White
