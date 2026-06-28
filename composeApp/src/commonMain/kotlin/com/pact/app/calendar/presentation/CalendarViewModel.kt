@@ -27,9 +27,16 @@ class CalendarViewModel(
         when(action){
             is CalendarAction.LoadEvents -> {
                 viewModelScope.launch {
+                    println("LoadEvents fired")
                     calendarRepository.getAllEvents()
-                        .onSuccess { events -> _state.update { it.copy(events = events) }  }
-                        .onFailure { _state.update { it.copy(errorMessage = "Failed to get events") } }
+                        .onSuccess { events ->
+                            println("SUCCESS: got ${events.size} events")
+                            _state.update { it.copy(events = events) }
+                        }
+                        .onFailure { error ->
+                            println("FAILURE: ${error.message}")
+                            _state.update { it.copy(errorMessage = "Failed to get events") }
+                        }
                 }
             }
             is CalendarAction.OnSelectedViewChange -> {

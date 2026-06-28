@@ -59,25 +59,40 @@ import com.pact.app.calendar.presentation.event.sheets.DatePickerSheet
 import com.pact.app.calendar.presentation.event.sheets.ReminderSheet
 import com.pact.app.calendar.presentation.event.sheets.RepeatSheet
 import com.pact.app.calendar.presentation.event.sheets.TimePickerSheet
+import jdk.jfr.Event
 
 
 @Composable
 fun EventFormScreenRoot(
     viewModel: EventViewModel,
-    pactEvent: PactEvent?,
-
+    eventId: String?,
     onBack: () -> Unit,
-){
+) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    LaunchedEffect(pactEvent) {
-        if (pactEvent != null) {
-            viewModel.onAction(EventAction.PopulateForm(pactEvent))
+    LaunchedEffect(eventId) {
+        if (eventId != null) {
+            viewModel.onAction(EventAction.LoadEvent(eventId))
         }
     }
+
+    LaunchedEffect(state.saveSuccess) {
+        if (state.saveSuccess) {
+            onBack()
+            viewModel.onAction(EventAction.ResetSaveState)
+        }
+    }
+
+    LaunchedEffect(state.deleteSuccess) {
+        if (state.deleteSuccess) {
+            onBack()
+            viewModel.onAction(EventAction.ResetDeleteState)
+        }
+    }
+
     EventFormScreen(
-        state=state,
+        state = state,
         onAction = viewModel::onAction,
-        onBack=onBack
+        onBack = onBack
     )
 }
 
@@ -107,6 +122,7 @@ private fun EventFormScreen(
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp, vertical = 16.dp),
             state.isAddMode,
+            { onAction(EventAction.OnSaveEventFormScreen) },
             onBack
         )
 
@@ -205,7 +221,7 @@ private fun EventFormScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             if(!state.isAddMode){
-                EventDeleteButton({})
+                EventDeleteButton { onAction(EventAction.OnDeleteEventFormScreen) }
             }
 
 
@@ -213,7 +229,7 @@ private fun EventFormScreen(
 
         // Pinned button
         FloatingActionButton(
-            onClick = {},
+            onClick = {onAction(EventAction.OnSaveEventFormScreen)},
             shape = RoundedCornerShape(50),
             containerColor = Primary,
             contentColor = Color.White,
@@ -278,6 +294,7 @@ private fun EventFormScreen(
 private fun EventFormHeader(
     modifier: Modifier = Modifier,
     isAddMode: Boolean,
+    onSave: () -> Unit,
     onBack: () -> Unit
 ){
 
@@ -306,7 +323,7 @@ private fun EventFormHeader(
             text= if(isAddMode) "New Task" else "Edit Task",
             style = MaterialTheme.typography.titleMedium
         )
-        LinkText("Save", {})
+        LinkText("Save", onSave)
     }
 }
 

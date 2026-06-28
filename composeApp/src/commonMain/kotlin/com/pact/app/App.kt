@@ -13,39 +13,39 @@ import kotlinx.datetime.LocalDate
 import org.koin.compose.viewmodel.koinViewModel
 
 
-@Composable
-fun ScreenPreview() {
-    PactTheme{
-        val samplePactEvent = PactEvent(
-            id = "test-123",
-            title = "Deep focus: calendar mocks",
-            date = LocalDate(2026, 6, 16),
-            startTime = 570,  // 9:30 AM
-            endTime = 660,    // 11:00 AM
-            color = 0xFF9B8EC4,
-            reminder = ReminderTime(ReminderType.TEN_MIN),
-            repeat = RepeatType.NONE,
-            notes = "Work on the week view grid",
-            isCompleted = false
-        )
-        val viewModel = koinViewModel<EventViewModel>()
-        EventFormScreenRoot(viewModel, samplePactEvent, {})
-    }
-
-//        val viewModel = koinViewModel<CalendarViewModel>()
-//        CalendarScreenRoot(
-//            viewModel, {}, {}, {}
+//@Composable
+//fun ScreenPreview() {
+//    PactTheme{
+//        val samplePactEvent = PactEvent(
+//            id = "test-123",
+//            title = "Deep focus: calendar mocks",
+//            date = LocalDate(2026, 6, 16),
+//            startTime = 570,  // 9:30 AM
+//            endTime = 660,    // 11:00 AM
+//            color = 0xFF9B8EC4,
+//            reminder = ReminderTime(ReminderType.TEN_MIN),
+//            repeat = RepeatType.NONE,
+//            notes = "Work on the week view grid",
+//            isCompleted = false
 //        )
-}
+//        val viewModel = koinViewModel<EventViewModel>()
+//        EventFormScreenRoot(viewModel, samplePactEvent, {})
+//    }
+//
+////        val viewModel = koinViewModel<CalendarViewModel>()
+////        CalendarScreenRoot(
+////            viewModel, {}, {}, {}
+////        )
+//}
 
 @Composable
 @Preview
 fun App() {
-//    PactTheme {
-//        Navigation()
-//    }
+    PactTheme {
+        Navigation()
+    }
 
-    ScreenPreview()
+//    ScreenPreview()
 }
 
 

@@ -23,7 +23,11 @@ data class EventState(
     val notes: String? = null,
     val isCompleted: Boolean = false,
     // UI States
-    val activeSheet: BottomSheetType? = null
+    val activeSheet: BottomSheetType? = null,
+
+    val errorMessage: String = "",
+    val saveSuccess: Boolean = false,
+    val deleteSuccess: Boolean = false
 
 ){
     // This is a computed property

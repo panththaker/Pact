@@ -55,13 +55,15 @@ import com.pact.app.calendar.presentation.views.week.WeekView
 import com.pact.app.core.domain.UserSession
 import com.pact.app.core.ui.NavTab
 import com.pact.app.core.ui.PactNavBar
+import com.pact.app.core.utils.TimeOfDayGreeting
 
 @Composable
 fun CalendarScreenRoot(
     viewModel: CalendarViewModel,
     onNavigateToTodo: () -> Unit,
     onNavigateToChat: () -> Unit,
-    onNavigateToProfile: () -> Unit
+    onNavigateToProfile: () -> Unit,
+    onNavigateToCreateEvent: () -> Unit
 ){
     LaunchedEffect(Unit) {
         viewModel.onAction(CalendarAction.LoadEvents)
@@ -75,6 +77,7 @@ fun CalendarScreenRoot(
         onNavigateToTodo = onNavigateToTodo,
         onNavigateToChat = onNavigateToChat,
         onNavigateToProfile = onNavigateToProfile,
+        onNavigateToCreateEvent = onNavigateToCreateEvent
     )
 }
 
@@ -86,7 +89,8 @@ private fun CalendarScreen(
     onAction:(CalendarAction) -> Unit,
     onNavigateToTodo: () -> Unit,
     onNavigateToChat: () -> Unit,
-    onNavigateToProfile: () -> Unit
+    onNavigateToProfile: () -> Unit,
+    onNavigateToCreateEvent: () -> Unit
 )
 {
     Scaffold(
@@ -104,7 +108,7 @@ private fun CalendarScreen(
                     )
             ) {
                 FloatingActionButton(
-                    onClick = {},
+                    onClick = onNavigateToCreateEvent,
                     shape = CircleShape,
                     containerColor = Primary,
                     contentColor = Color.White,
@@ -190,7 +194,7 @@ private fun Header(state: CalendarState, session: UserSession?) {
 
         Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(
-                text = "Good morning, ${session?.firstName}.", // TODO: Update with the user name
+                text = "${TimeOfDayGreeting(state.todayDateTime)}, ${session?.firstName}.",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface
             )

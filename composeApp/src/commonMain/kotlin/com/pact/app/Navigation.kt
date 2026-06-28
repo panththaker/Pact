@@ -7,12 +7,15 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.pact.app.auth.presentation.AuthViewModel
 import com.pact.app.auth.presentation.LoginScreenRoot
 import com.pact.app.auth.presentation.OpeningScreen
 import com.pact.app.auth.presentation.SignUpScreenRoot
 import com.pact.app.calendar.presentation.CalendarScreenRoot
 import com.pact.app.calendar.presentation.CalendarViewModel
+import com.pact.app.calendar.presentation.event.EventFormScreenRoot
+import com.pact.app.calendar.presentation.event.EventViewModel
 import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -24,6 +27,8 @@ import org.koin.compose.viewmodel.koinViewModel
 @Serializable object Todo
 @Serializable object Chat
 @Serializable object Profile
+
+@Serializable data class EventForm(val eventId: String? = null)
 
 
 @Composable
@@ -71,9 +76,20 @@ fun Navigation(){
                 viewModel = viewModel,
                 onNavigateToTodo = { navController.navigate(Todo) },
                 onNavigateToChat = { navController.navigate(Chat) },
-                onNavigateToProfile = { navController.navigate(Profile) }
+                onNavigateToProfile = { navController.navigate(Profile) },
+                onNavigateToCreateEvent = { navController.navigate(EventForm(eventId = null)) }
             )
         }
+        composable<EventForm> { backStackEntry ->
+            val args = backStackEntry.toRoute<EventForm>()   // ← getting data IN
+            val viewModel = koinViewModel<EventViewModel>()
+            EventFormScreenRoot(
+                viewModel = viewModel,
+                eventId = args.eventId,                       // ← passed in
+                onBack = { navController.popBackStack() }      // ← getting OUT
+            )
+        }
+
         composable<Todo> { }
         composable<Chat> { }
         composable<Profile> { }

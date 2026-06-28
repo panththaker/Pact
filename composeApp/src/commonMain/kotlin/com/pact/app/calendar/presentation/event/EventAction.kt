@@ -8,6 +8,8 @@ import kotlinx.datetime.LocalDate
 
 sealed interface EventAction {
     data object OnSaveEventFormScreen: EventAction
+    data object OnDeleteEventFormScreen: EventAction
+    data class LoadEvent(val eventID: String): EventAction
     data class PopulateForm(val event: PactEvent): EventAction
     
     data class OnTaskTitleChange(val taskName: String): EventAction
@@ -22,5 +24,8 @@ sealed interface EventAction {
     data class ConfirmReminder(val reminder: ReminderTime) : EventAction
     data class ConfirmRepeat(val repeatType: RepeatType): EventAction
     data class ConfirmDate(val date: LocalDate) : EventAction
+
+    data object ResetSaveState: EventAction
+    data object ResetDeleteState: EventAction
 
 }

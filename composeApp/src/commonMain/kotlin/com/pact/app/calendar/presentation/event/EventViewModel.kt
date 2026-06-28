@@ -21,6 +21,29 @@ class EventViewModel(
     @OptIn(ExperimentalUuidApi::class)
     fun onAction(action: EventAction){
         when(action){
+
+            is EventAction.ResetSaveState -> {
+                _state.update { it.copy(saveSuccess = false) }
+            }
+            is EventAction.ResetDeleteState -> {
+                _state.update { it.copy(deleteSuccess = false) }
+            }
+
+            is EventAction.LoadEvent -> {
+                viewModelScope.launch {
+                    calendarRepository.getEvent(action.eventID)
+                        .onSuccess { event -> onAction(EventAction.PopulateForm(event)) }
+                        .onFailure { /* set an error state, e.g. event not found */ }
+                }
+            }
+            is EventAction.OnDeleteEventFormScreen -> {
+                viewModelScope.launch {
+                    val id = _state.value.id ?: return@launch
+                    calendarRepository.deleteEvent(id)
+                        .onSuccess {  _state.update { it.copy(deleteSuccess = true) }}
+                        .onFailure {   _state.update { it.copy(errorMessage = "Failed to delete") }}
+                }
+            }
             is EventAction.OnSaveEventFormScreen -> {
                 viewModelScope.launch {
                     val currentState = _state.value
@@ -44,8 +67,8 @@ class EventViewModel(
                     }
 
                     result
-                        .onSuccess { /* signal success — navigate back? */ }
-                        .onFailure { /* set an error state */ }
+                        .onSuccess { _state.update { it.copy(saveSuccess = true) } }
+                        .onFailure { _state.update { it.copy(errorMessage = "Failed to save") } }
                 }
             }
 
